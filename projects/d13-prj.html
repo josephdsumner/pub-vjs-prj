@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Random Ron</title>
+
+	<style type="text/css">
+		body {
+			margin: 1em auto;
+			max-width: 40em;
+			width: 88%;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Random Ron</h1>
+
+		<blockquote id="ron-quote" aria-live="polite"></blockquote>
+
+		<p>
+			<button id="more-ron-button">More Ron</button>
+		</p>
+
+	<script>
+
+		// Elements
+		let ronQuote = document.querySelector('blockquote#ron-quote');
+		let moreRonButton = document.querySelector('button#more-ron-button');
+
+		// Fetches a quote from the API and sets the blockquote
+		function getQuote() {
+			let url = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes';
+			fetch(url)
+				.then( function(response) { 
+					if (response.ok) {
+						return response.json();
+				 } else {
+					 console.log('Something went wrong.');
+					}
+				}).then(function(json) {
+					ronQuote.textContent = json[0];
+				}).catch(function(err) {
+					console.log(err);
+				});
+		}
+
+		// Get quote / set on initial load
+		getQuote();
+
+		// Listen for "More Ron" requests
+		moreRonButton.addEventListener('click', function(event) {
+			getQuote();
+		})	
+
+
+
+	</script>
+</body>
+</html>
